@@ -39,10 +39,10 @@ beaconsModule.factory('$beaconSniffer', function () {
     for (var i in beacons) {
       var beacon = beacons[i];
       if ((beacon.macAddress = 'C5:A5:F9:2D:52:3F') && (beacon.distance < 0.1)) {
-        $('#found-beacons').text("You have entered the hotel");
+        $('#found_beacons').text("You have entered the hotel");
         console.log("Distance: " + beacon.distance + "-In");
       } else if ((beacon.macAddress = 'C5:A5:F9:2D:52:3F') && (beacon.distance > 0.1)) {
-        $('#found-beacons').text("You are near the hotel");
+        $('#found_beacons').text("You are near the hotel");
         console.log("Distance: " + beacon.distance + '-Near');
       }
     }
