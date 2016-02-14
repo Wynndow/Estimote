@@ -3,7 +3,6 @@ var beaconsModule = angular.module('beacons', []);
 
 beaconsModule.factory('$beaconSniffer', function () {
 
-
   var beacons = [];
 
   function onDeviceReady() {
@@ -22,7 +21,6 @@ beaconsModule.factory('$beaconSniffer', function () {
           beacon.timeStamp = Date.now();
           var key = beacon.uuid + ':' + beacon.major + ':' + beacon.minor;
           beacons[key] = beacon;
-          console.log(beacons);
         }
       }
     }
