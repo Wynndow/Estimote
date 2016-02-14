@@ -2,19 +2,17 @@
 var beaconsModule = angular.module('beacons', []);
 
 beaconsModule.factory('$beaconSniffer', function () {
-  return {
-    sniff : function (estimote) {
-      onDeviceReady(estimote);
-    }
-  };
 
-  function onDeviceReady(estimote) {
+
+  var beacons = [];
+
+  function onDeviceReady() {
   $('#found_beacons').text('Device Ready');
-  startScan(estimote);
+  startScan();
   updateTimer = setInterval(checkHotelBeacon, 1000);
   }
 
-  function startScan(estimote) {
+  function startScan() {
     $('#found_beacons').text('Start Scan');
 
     function onBeaconsRanged(beaconInfo) {
@@ -23,9 +21,8 @@ beaconsModule.factory('$beaconSniffer', function () {
         if (beacon.rssi < 0) {
           beacon.timeStamp = Date.now();
           var key = beacon.uuid + ':' + beacon.major + ':' + beacon.minor;
-          var beaconslist = [];
-          beaconslist[key] = beacon;
-          console.log(beaconslist);
+          beacons[key] = beacon;
+          console.log(beacons);
         }
       }
     }
@@ -52,5 +49,11 @@ beaconsModule.factory('$beaconSniffer', function () {
       }
     }
   }
+
+  return {
+    sniff : function () {
+      onDeviceReady();
+    }
+  };
 
 });
