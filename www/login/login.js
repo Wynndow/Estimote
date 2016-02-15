@@ -19,7 +19,6 @@ angular.module('login', ['ionic', 'firebase.utils', 'firebase.auth', 'ngRoute'])
       Auth.$authWithPassword({ email: email, password: pass }, {rememberMe: true})
         .then(function(/* user */) {
           console.log('Logged in');
-          // $beaconSniffer.sniff();
           $location.path('/beacons');
         }, function(err) {
           console.log('failure');
