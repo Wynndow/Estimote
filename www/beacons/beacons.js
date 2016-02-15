@@ -16,7 +16,7 @@ app.factory('$beaconSniffer', function () {
 
   function onDeviceReady() {
     startScan();
-    updateTimer = setInterval(checkHotelBeacon, 1000);
+    var updateTimer = setInterval(checkHotelBeacon, 1000);
   }
 
   function startScan() {
@@ -44,14 +44,24 @@ app.factory('$beaconSniffer', function () {
   function checkHotelBeacon() {
     for (var i in beacons) {
       var beacon = beacons[i];
-      if ((beacon.macAddress = 'C5:A5:F9:2D:52:3F') && (beacon.distance < 1)) {
+      if ((beacon.macAddress = 'C5:A5:F9:2D:52:3F') && (beacon.distance < 0.5)) {
         $('#found_beacons').text("You have entered the hotel");
         console.log("Distance: " + beacon.distance + "-In");
+        sendDataToFirebase();
       } else if ((beacon.macAddress = 'C5:A5:F9:2D:52:3F') && (beacon.distance > 1)) {
         $('#found_beacons').text("You are near the hotel");
         console.log("Distance: " + beacon.distance + '-Near');
       }
     }
+  }
+
+  function sendDataToFirebase() {
+    var db = new Firebase('https://hotel-check-in.firebaseio.com/');
+    var uid = db.getAuth().uid;
+    var ref = new Firebase('https://hotel-check-in.firebaseio.com/users/' + uid);
+    ref.update({
+      onSite: true
+    });
   }
 
   return {

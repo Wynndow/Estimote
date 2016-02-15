@@ -44,6 +44,10 @@ angular.module('beacons', [])
     }
   }
 
+  function sendDataToFirebase() {
+
+  }
+
   return {
     sniff : function () {
       console.log("Sniffer sniffing...");
