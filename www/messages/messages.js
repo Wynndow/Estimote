@@ -9,12 +9,9 @@ angular.module('messages', ['ngRoute', 'ngCordova'])
 
 
   .controller('messageCtrl', ['messageFactory', function (messageFactory) {
-    console.log("Inside the messageCtrl");
-
     self = this;
     self.message = messageFactory.getMessage();
-    messageFactory.notifyUser();
-
+    messageFactory.notifyUser(self.message);
   }])
 
   .factory('messageFactory', function($cordovaLocalNotification, $ionicPlatform) {
@@ -22,12 +19,12 @@ angular.module('messages', ['ngRoute', 'ngCordova'])
       getMessage: function() {
         return "You are staying in room 101";
       },
-      notifyUser: function() {
+      notifyUser: function(message) {
         $ionicPlatform.ready(function() {
           $cordovaLocalNotification.schedule({
             id: 1,
             title: 'Warning',
-            text: 'You have a message',
+            text: message,
             data: {
               customProperty: 'custom value'
             }
