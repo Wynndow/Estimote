@@ -10,7 +10,7 @@ app.controller('BeaconCtrl', ['$beaconSniffer', '$scope', 'fbutil', 'user', '$fi
   $beaconSniffer.sniff();
 }]);
 
-app.factory('$beaconSniffer', function () {
+app.factory('$beaconSniffer', function ($location, $rootScope) {
 
   var beacons = [];
 
@@ -49,6 +49,8 @@ app.factory('$beaconSniffer', function () {
         console.log("Distance: " + beacon.distance + "-In");
         sendDataToFirebase();
         $location.path('/messages');
+        $rootScope.$apply();
+        console.log('After the path')
       } else if ((beacon.macAddress = 'C5:A5:F9:2D:52:3F') && (beacon.distance > 1)) {
         $('#found_beacons').text("You are near the hotel");
         console.log("Distance: " + beacon.distance + '-Near');
