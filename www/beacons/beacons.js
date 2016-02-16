@@ -41,15 +41,22 @@ app.factory('$beaconSniffer', function ($location, $rootScope) {
   function checkHotelBeacon() {
     for (var i in beacons) {
       var beacon = beacons[i];
-      if ((beacon.proximityUUID === "51ea51f9-2455-49fe-b751-09c609c70633") && (beacon.distance < 0.25)) {
+      if (isInHotel(beacon)) {
         sendDataToFirebase();
         stopSniffing();
         changePathToMessages();
-      } else if ((beacon.proximityUUID === "51ea51f9-2455-49fe-b751-09c609c70633") && (beacon.distance > 0.25)) {
+      } else if (isNearHotel(beacon)) {
         $('#found_beacons').text("You are near the hotel");
         console.log("Distance: " + beacon.distance + '-Near');
       }
     }
+  }
+
+  function isInHotel(beacon) {
+    return ((beacon.proximityUUID === "51ea51f9-2455-49fe-b751-09c609c70633") && (beacon.distance < 0.25));
+  }
+  function isNearHotel(beacon) {
+    return (beacon.proximityUUID === "51ea51f9-2455-49fe-b751-09c609c70633") && (beacon.distance > 0.25);
   }
 
   function stopSniffing() {
