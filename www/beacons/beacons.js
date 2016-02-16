@@ -66,7 +66,6 @@ app.factory('$beaconSniffer', function () {
 
   return {
     sniff : function () {
-      console.log("Sniffer sniffing...");
       onDeviceReady();
     }
   };
