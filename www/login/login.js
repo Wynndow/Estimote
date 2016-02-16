@@ -1,5 +1,6 @@
 (function(angular) {
-
+  "use strict";
+  
   var app = angular.module('login', ['ionic', 'firebase.utils', 'firebase.auth', 'ngRoute']);
 
   app.config(['$routeProvider', function($routeProvider) {
