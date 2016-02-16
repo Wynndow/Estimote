@@ -19,6 +19,9 @@ app.factory('$beaconSniffer', function ($location, $rootScope) {
 
   function startScan() {
 
+    estimote.beacons.requestAlwaysAuthorization();
+    estimote.beacons.startRangingBeaconsInRegion({}, onBeaconsRanged, onError);
+
     function onBeaconsRanged(beaconInfo) {
       for (var i in beaconInfo.beacons) {
         var beacon = beaconInfo.beacons[i];
@@ -33,20 +36,16 @@ app.factory('$beaconSniffer', function ($location, $rootScope) {
     function onError(errorMessage) {
       console.log('Ranging beacons did fail: ' + errorMessage);
     }
-
-    estimote.beacons.requestAlwaysAuthorization();
-    estimote.beacons.startRangingBeaconsInRegion({}, onBeaconsRanged, onError);
-
   }
 
   function checkHotelBeacon() {
     for (var i in beacons) {
       var beacon = beacons[i];
-      if ((beacon.macAddress = 'C5:A5:F9:2D:52:3F') && (beacon.distance < 0.5)) {
+      if ((beacon.proximityUUID === "51ea51f9-2455-49fe-b751-09c609c70633") && (beacon.distance < 0.25)) {
         sendDataToFirebase();
         stopSniffing();
         changePathToMessages();
-      } else if ((beacon.macAddress = 'C5:A5:F9:2D:52:3F') && (beacon.distance > 1)) {
+      } else if ((beacon.proximityUUID === "51ea51f9-2455-49fe-b751-09c609c70633") && (beacon.distance > 0.25)) {
         $('#found_beacons').text("You are near the hotel");
         console.log("Distance: " + beacon.distance + '-Near');
       }
