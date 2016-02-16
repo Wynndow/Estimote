@@ -20,8 +20,7 @@
           self.message = snapshot.val();
           callback(snapshot.val());
         }, function(errorObject) {
-          console.log("The read failed: " + errorObject.code);
-          return 'Please go to reception';
+          callback('Please go to reception');
         });
       },
       notifyUser: function(message) {
@@ -33,8 +32,6 @@
             data: {
               customProperty: 'custom value'
             }
-          }).then(function(result) {
-            console.log('Notification 1 triggered');
           });
         });
       }

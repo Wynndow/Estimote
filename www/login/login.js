@@ -1,6 +1,6 @@
 (function(angular) {
   "use strict";
-  
+
   var app = angular.module('login', ['ionic', 'firebase.utils', 'firebase.auth', 'ngRoute']);
 
   app.config(['$routeProvider', function($routeProvider) {
@@ -25,10 +25,8 @@
           rememberMe: true
         })
         .then(function() {
-          console.log('Logged in');
           $location.path('/beacons');
         }, function(err) {
-          console.log('failure');
           $scope.err = errMessage(err);
         });
     };
