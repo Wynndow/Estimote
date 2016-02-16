@@ -1,16 +1,15 @@
 (function(angular) {
   "use strict";
 
-  angular.module('messages', ['ngRoute', 'ngCordova', 'firebase.auth', 'firebase', 'firebase.utils'])
+  var app = angular.module('messages', ['ngRoute', 'ngCordova', 'firebase.auth', 'firebase', 'firebase.utils']);
 
-
-  .controller('messageCtrl', ['messagesFactory', function(messagesFactory) {
+  app.controller('messageCtrl', ['messagesFactory', function(messagesFactory) {
     self = this;
     var callback = messagesFactory.notifyUser;
     messagesFactory.getMessage(callback);
-  }])
+  }]);
 
-  .factory('messagesFactory', function($cordovaLocalNotification, $ionicPlatform) {
+  app.factory('messagesFactory', function($cordovaLocalNotification, $ionicPlatform) {
     return {
       getMessage: function(callback) {
         var db = new Firebase('https://hotel-check-in.firebaseio.com/');
@@ -36,9 +35,9 @@
         });
       }
     };
-  })
+  });
 
-  .config(['$routeProvider', function($routeProvider) {
+  app.config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/messages', {
       controller: 'messageCtrl',
       templateUrl: 'messages/messages.html'
