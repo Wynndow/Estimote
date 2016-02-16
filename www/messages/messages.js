@@ -1,4 +1,4 @@
-angular.module('messages', ['ngRoute', 'ngCordova'])
+angular.module('messages', ['ngRoute', 'ngCordova', 'firebase.auth', 'firebase', 'firebase.utils'])
 
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/messages', {
@@ -7,17 +7,25 @@ angular.module('messages', ['ngRoute', 'ngCordova'])
     });
   }])
 
-
   .controller('messageCtrl', ['messageFactory', function (messageFactory) {
     self = this;
-    self.message = messageFactory.getMessage();
-    messageFactory.notifyUser(self.message);
+    messageFactory.getMessage(messageFactory.notifyUser);
   }])
 
   .factory('messageFactory', function($cordovaLocalNotification, $ionicPlatform) {
     return {
-      getMessage: function() {
-        return "You are staying in room 101";
+      getMessage: function(callback) {
+        var db = new Firebase('https://hotel-check-in.firebaseio.com/');
+        var uid = db.getAuth().uid;
+        var ref = new Firebase('https://hotel-check-in.firebaseio.com/users/' + uid + '/arrivalMessage');
+        ref.on('value', function(snapshot) {
+          console.log(snapshot.val());
+          self.message = snapshot.val();
+          callback(snapshot.val());
+        }, function(errorObject) {
+          console.log("The read failed: " + errorObject.code);
+          return 'Please go to reception';
+        });
       },
       notifyUser: function(message) {
         $ionicPlatform.ready(function() {
