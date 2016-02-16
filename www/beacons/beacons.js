@@ -47,15 +47,23 @@ app.factory('$beaconSniffer', function ($location, $rootScope) {
       var beacon = beacons[i];
       if ((beacon.macAddress = 'C5:A5:F9:2D:52:3F') && (beacon.distance < 0.5)) {
         sendDataToFirebase();
-        estimote.beacons.stopRangingBeaconsInRegion({});
-        $location.path('/messages');
-        $rootScope.$apply();
-        clearInterval(updateTimer);
+        stopSniffing();
+        changePathToMessages();
       } else if ((beacon.macAddress = 'C5:A5:F9:2D:52:3F') && (beacon.distance > 1)) {
         $('#found_beacons').text("You are near the hotel");
         console.log("Distance: " + beacon.distance + '-Near');
       }
     }
+  }
+
+  function stopSniffing() {
+    estimote.beacons.stopRangingBeaconsInRegion({});
+    clearInterval(updateTimer);
+  }
+
+  function changePathToMessages() {
+    $location.path('/messages');
+    $rootScope.$apply();
   }
 
   function sendDataToFirebase() {
