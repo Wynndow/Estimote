@@ -48,6 +48,7 @@ app.factory('$beaconSniffer', function () {
         $('#found_beacons').text("You have entered the hotel");
         console.log("Distance: " + beacon.distance + "-In");
         sendDataToFirebase();
+        $location.path('/messages');
       } else if ((beacon.macAddress = 'C5:A5:F9:2D:52:3F') && (beacon.distance > 1)) {
         $('#found_beacons').text("You are near the hotel");
         console.log("Distance: " + beacon.distance + '-Near');
