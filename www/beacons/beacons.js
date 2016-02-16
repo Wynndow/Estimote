@@ -39,7 +39,7 @@
           stopSniffing();
           changePathToMessages();
         } else if (isNearHotel(beacon)) {
-          $('#found_beacons').text("You are near the hotel");
+          updatePageWithNear()
         }
       }
     }
@@ -52,6 +52,15 @@
       return (beacon.proximityUUID === "51ea51f9-2455-49fe-b751-09c609c70633") && (beacon.distance > 0.25);
     }
 
+    function sendDataToFirebase() {
+      var db = new Firebase('https://hotel-check-in.firebaseio.com/');
+      var uid = db.getAuth().uid;
+      var ref = new Firebase('https://hotel-check-in.firebaseio.com/users/' + uid);
+      ref.update({
+        onSite: true
+      });
+    }
+
     function stopSniffing() {
       estimote.beacons.stopRangingBeaconsInRegion({});
       clearInterval(updateTimer);
@@ -62,13 +71,8 @@
       $rootScope.$apply();
     }
 
-    function sendDataToFirebase() {
-      var db = new Firebase('https://hotel-check-in.firebaseio.com/');
-      var uid = db.getAuth().uid;
-      var ref = new Firebase('https://hotel-check-in.firebaseio.com/users/' + uid);
-      ref.update({
-        onSite: true
-      });
+    function updatePageWithNear() {
+      $('#found_beacons').text("You are near the hotel");
     }
 
     return {
