@@ -3,10 +3,7 @@
 
 var app = angular.module('beacons', ['firebase.auth', 'firebase', 'firebase.utils', 'ngRoute']);
 
-app.controller('BeaconCtrl', ['$beaconSniffer', '$scope', 'fbutil', 'user', '$firebaseObject', 'FBURL', function ($beaconSniffer, $scope, fbutil, user, $firebaseObject, FBURL) {
-  $scope.syncedValue = $firebaseObject(fbutil.ref('syncedValue'));
-  $scope.user = user;
-  $scope.FBURL = FBURL;
+app.controller('BeaconCtrl', ['$beaconSniffer', function ($beaconSniffer) {
   $beaconSniffer.sniff();
 }]);
 
