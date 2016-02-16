@@ -1,48 +1,41 @@
 <!DOCTYPE html>
 <html ng-app="starter">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'" />
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title>Hotelligence</title>
 
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'" />
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title>Hotelligence</title>
 
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
-    <link href="css/ionic.app.css" rel="stylesheet">
-    -->
+  <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
 
-    <!-- ionic/angularjs js -->
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
-    <script src="lib/angular-route/angular-route.js"></script>
-    <script src="lib/firebase/firebase.js"></script>
-    <script src="lib/angularfire/dist/angularfire.js"></script>
-    <script src="lib/jquery/jquery.js"></script>
+  <script src="lib/ionic/js/ionic.bundle.js"></script>
+  <script src="lib/angular-route/angular-route.js"></script>
+  <script src="lib/firebase/firebase.js"></script>
+  <script src="lib/angularfire/dist/angularfire.js"></script>
+  <script src="lib/jquery/jquery.js"></script>
 
-    <!-- cordova script (this will be a 404 during development) -->
-    <script src="lib/ngCordova/ng-cordova.min.js"></script>
-    <script src="cordova.js"></script>
+  <script src="lib/ngCordova/ng-cordova.min.js"></script>
+  <script src="cordova.js"></script>
 
+  <script src="app.js"></script>
+  <script src="home/home.js"></script>
+  <script src="login/login.js"></script>
+  <script src="beacons/beacons.js"></script>
+  <script src="messages/messages.js"></script>
+  <script src="config.js"></script>
 
-    <!-- your app's js -->
-    <script src="app.js"></script>
-    <script src="home/home.js"></script>
-    <script src="login/login.js"></script>
-    <script src="beacons/beacons.js"></script>
-    <script src="messages/messages.js"></script>
-    <script src="config.js"></script>
+  <script src="components/auth/auth.js"></script>
+  <script src="components/firebase.utils/firebase.utils.js"></script>
+  <script src="components/ngcloak/ngcloak-decorator.js"></script>
+  <script src="components/reverse/reverse-filter.js"></script>
+  <script src="components/security/security.js"></script>
 
-    <script src="components/auth/auth.js"></script>
-    <script src="components/firebase.utils/firebase.utils.js"></script>
-    <script src="components/ngcloak/ngcloak-decorator.js"></script>
-    <script src="components/reverse/reverse-filter.js"></script>
-    <script src="components/security/security.js"></script>
+</head>
 
-  </head>
-
-  <body ng-cloak>
-    <div ng-view></div>
-  </body>
+<body ng-cloak>
+  <div ng-view></div>
+</body>
 
 </html>
