@@ -13,10 +13,11 @@ app.controller('BeaconCtrl', ['$beaconSniffer', '$scope', 'fbutil', 'user', '$fi
 app.factory('$beaconSniffer', function ($location, $rootScope) {
 
   var beacons = [];
+  var updateTimer;
 
   function onDeviceReady() {
     startScan();
-    var updateTimer = setInterval(checkHotelBeacon, 1000);
+    updateTimer = setInterval(checkHotelBeacon, 1000);
   }
 
   function startScan() {
@@ -45,12 +46,11 @@ app.factory('$beaconSniffer', function ($location, $rootScope) {
     for (var i in beacons) {
       var beacon = beacons[i];
       if ((beacon.macAddress = 'C5:A5:F9:2D:52:3F') && (beacon.distance < 0.5)) {
-        $('#found_beacons').text("You have entered the hotel");
-        console.log("Distance: " + beacon.distance + "-In");
         sendDataToFirebase();
+        estimote.beacons.stopRangingBeaconsInRegion({});
         $location.path('/messages');
         $rootScope.$apply();
-        console.log('After the path')
+        clearInterval(updateTimer);
       } else if ((beacon.macAddress = 'C5:A5:F9:2D:52:3F') && (beacon.distance > 1)) {
         $('#found_beacons').text("You are near the hotel");
         console.log("Distance: " + beacon.distance + '-Near');

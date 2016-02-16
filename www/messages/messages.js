@@ -8,4 +8,8 @@ angular.module('messages', ['ngRoute'])
   }])
 
 
-  .controller('messageCtrl', [function () {}]);
+  .controller('messageCtrl', [function () {}])
+
+  .factory('messageFactory', function() {
+    return {}
+  });
