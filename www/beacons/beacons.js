@@ -59,10 +59,13 @@ app.factory('$beaconSniffer', function ($location, $rootScope) {
   function stopSniffing() {
     estimote.beacons.stopRangingBeaconsInRegion({});
     clearInterval(updateTimer);
+    console.log("Sniffing stopped");
+
   }
 
   function changePathToMessages() {
     $location.path('/messages');
+    console.log("Change path to messages");
     $rootScope.$apply();
   }
 

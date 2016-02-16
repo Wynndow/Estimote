@@ -1,4 +1,4 @@
-angular.module('messages', ['ngRoute'])
+angular.module('messages', ['ngRoute', 'ngCordova'])
 
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/messages', {
@@ -8,8 +8,34 @@ angular.module('messages', ['ngRoute'])
   }])
 
 
-  .controller('messageCtrl', [function () {}])
+  .controller('messageCtrl', [function () {
+    console.log("Inside the messageCtrl");
 
-  .factory('messageFactory', function() {
-    return {}
-  });
+    self = this;
+    self.message = "hello there";
+    // self.message = messageFactory.getMessage();
+    // messageFactory.notifyUser(self.message);
+
+  }]);
+
+  // .factory('messageFactory', function($cordovaLocalNotification, $ionicPlatform) {
+  //   return {
+  //     getMessage: function() {
+  //       return "You are staying in room 101";
+  //     },
+  //     notifyUser: function(message) {
+  //       $ionicPlatform.ready(function() {
+  //         $cordovaLocalNotification.schedule({
+  //           id: 1,
+  //           title: 'Warning',
+  //           text: message,
+  //           data: {
+  //             customProperty: 'custom value'
+  //           }
+  //         }).then(function(result) {
+  //           console.log('Notification 1 triggered');
+  //         });
+  //       });
+  //     }
+  //   };
+  // });
