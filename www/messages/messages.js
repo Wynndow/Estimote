@@ -1,25 +1,19 @@
 angular.module('messages', ['ngRoute', 'ngCordova', 'firebase.auth', 'firebase', 'firebase.utils'])
 
-  .config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/messages', {
-      controller: 'messageCtrl',
-      templateUrl: 'messages/messages.html'
-    });
-  }])
 
-  .controller('messageCtrl', ['messageFactory', function (messageFactory) {
+  .controller('messageCtrl', ['messagesFactory', function (messagesFactory) {
     self = this;
-    messageFactory.getMessage(messageFactory.notifyUser);
+    var callback = messagesFactory.notifyUser;
+    messagesFactory.getMessage(callback);
   }])
 
-  .factory('messageFactory', function($cordovaLocalNotification, $ionicPlatform) {
+  .factory('messagesFactory', function($cordovaLocalNotification, $ionicPlatform) {
     return {
       getMessage: function(callback) {
         var db = new Firebase('https://hotel-check-in.firebaseio.com/');
         var uid = db.getAuth().uid;
         var ref = new Firebase('https://hotel-check-in.firebaseio.com/users/' + uid + '/arrivalMessage');
         ref.on('value', function(snapshot) {
-          console.log(snapshot.val());
           self.message = snapshot.val();
           callback(snapshot.val());
         }, function(errorObject) {
@@ -42,4 +36,11 @@ angular.module('messages', ['ngRoute', 'ngCordova', 'firebase.auth', 'firebase',
         });
       }
     };
-  });
+  })
+
+  .config(['$routeProvider', function($routeProvider) {
+    $routeProvider.when('/messages', {
+      controller: 'messageCtrl',
+      templateUrl: 'messages/messages.html'
+    });
+  }]);
