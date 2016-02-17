@@ -50,16 +50,18 @@ describe('Beacons', function() {
           startRangingBeaconsInRegion: function() {}
         }
       };
+      startScan = function() {};
     }));
 
     it('responds to sniff', function() {
       expect(beaconFactory.sniff).toBeDefined();
     });
 
-    it('starts sniffing when sniff is run', function() {
-      beaconFactory.sniff();
-      expect(onDeviceReady).toHaveBeenCalled();
-    })
+    it('initializes with an empty array of beacins', function() {
+      var func = beaconFactory.sniff;
+      console.log(func.beacons)
+      expect(func.beacons.length).toBe(0);
+    });
 
   });
 
