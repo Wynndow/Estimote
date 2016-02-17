@@ -40,14 +40,19 @@ describe('Beacons', function() {
       module('beacons');
     });
 
-    var beaconFactory;
+    var beaconService;
+    var loca;
+    var rootScope;
 
-    beforeEach(inject(function($beaconSniffer) {
+    beforeEach(inject(function($beaconSniffer, $location, $rootScope) {
       beaconService = $beaconSniffer;
+      loca = $location;
+      rootScope = $rootScope;
       estimote = {
         beacons: {
           requestAlwaysAuthorization: function() {},
-          startRangingBeaconsInRegion: function() {}
+          startRangingBeaconsInRegion: function() {},
+          stopRangingBeaconsInRegion: function() {}
         }
       };
     }));
@@ -64,9 +69,9 @@ describe('Beacons', function() {
       });
 
       it('calls to checkHotelBeacon', function() {
-        beaconService.updateTimer = 0;
+        spyOn(window, 'setInterval');
         beaconService.sniff();
-        expect(beaconService.updateTimer).toEqual(2);
+        expect(window.setInterval).toHaveBeenCalled();
       });
     });
 
@@ -128,6 +133,75 @@ describe('Beacons', function() {
         expect(beaconService.isInHotel(beacon)).toBe(false);
       });
     });
+
+    describe('#isNearHotel', function() {
+      it('returns true if the beacon is out of range', function() {
+        var beacon = {
+          proximityUUID: "51ea51f9-2455-49fe-b751-09c609c70633",
+          distance: 1
+        };
+        expect(beaconService.isNearHotel(beacon)).toBe(true);
+      });
+
+      it('returns false if the beacon is in range', function() {
+        var beacon = {
+          proximityUUID: "51ea51f9-2455-49fe-b751-09c609c70633",
+          distance: 0.1
+        };
+        expect(beaconService.isNearHotel(beacon)).toBe(false);
+      });
+
+      it('returns false if the beacon has the wrong UUID', function() {
+        var beacon = {
+          proximityUUID: "CLEARLY WRONG",
+          distance: 0.1
+        };
+        expect(beaconService.isNearHotel(beacon)).toBe(false);
+      });
+    });
+
+    // describe('#sendDataToFirebase', function() {
+    //   it('creates a Firebase instance', function() {
+    //     spyOn(Firebase, 'new');
+    //     beaconService.sendDataToFirebase();
+    //     expect(Firebase).toHaveBeenCalledWith('https://hotel-check-in.firebaseio.com/')
+    //   });
+    // });
+
+    describe('#stopSniffing', function() {
+      it('stops the beacons from being sniffed out', function() {
+        spyOn(estimote.beacons, 'stopRangingBeaconsInRegion');
+        beaconService.stopSniffing();
+        expect(estimote.beacons.stopRangingBeaconsInRegion).toHaveBeenCalled();
+      });
+
+      it('clears the interval', function() {
+        spyOn(window, 'clearInterval');
+        beaconService.stopSniffing();
+        expect(window.clearInterval).toHaveBeenCalled();
+      });
+    });
+
+    describe('#changePathToMessages', function() {
+      it('tells $location to change the path to messages', function() {
+        spyOn(loca, 'path');
+        beaconService.changePathToMessages();
+        expect(loca.path).toHaveBeenCalledWith('/messages');
+      });
+
+      it('applies the rootscope', function() {
+        spyOn(rootScope, '$apply');
+        beaconService.changePathToMessages();
+        expect(rootScope.$apply).toHaveBeenCalled();
+      });
+    });
+
+    // describe('#updatePageWithNear', function() {
+    //   it('updates the page', function() {
+    //     beaconService.updatePageWithNear();
+    //     expect($('#found_beacons').text).toBe("You are near the hotel");
+    //   });
+    // });
 
 
 
