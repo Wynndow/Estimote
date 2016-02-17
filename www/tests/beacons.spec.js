@@ -85,6 +85,50 @@ describe('Beacons', function() {
       });
     });
 
+    describe('#onBeaconsRanged', function() {
+      it('sets beacons array to data from onBeaconsRanged', function() {
+        var beaconInfo = {
+          beacons: [1,2,3]
+        };
+        beaconService.onBeaconsRanged(beaconInfo);
+        expect(beaconService.beacons).toEqual([1,2,3]);
+      });
+    });
+
+    describe('#onError', function() {
+      it('console logs the error message if their is one', function() {
+        spyOn(console, 'log');
+        beaconService.onError('All the bacon is gone');
+        expect(console.log).toHaveBeenCalledWith('Ranging beacons did fail: All the bacon is gone');
+      });
+    });
+
+    describe('#isInHotel', function() {
+      it('returns true if the beacon is within range', function() {
+        var beacon = {
+          proximityUUID: "51ea51f9-2455-49fe-b751-09c609c70633",
+          distance: 0.1
+        };
+        expect(beaconService.isInHotel(beacon)).toBe(true);
+      });
+
+      it('returns false if the beacon is out of range', function() {
+        var beacon = {
+          proximityUUID: "51ea51f9-2455-49fe-b751-09c609c70633",
+          distance: 1
+        };
+        expect(beaconService.isInHotel(beacon)).toBe(false);
+      });
+
+      it('returns false if the beacon has the wrong UUID', function() {
+        var beacon = {
+          proximityUUID: "CLEARLY WRONG",
+          distance: 0.1
+        };
+        expect(beaconService.isInHotel(beacon)).toBe(false);
+      });
+    });
+
 
 
   });
