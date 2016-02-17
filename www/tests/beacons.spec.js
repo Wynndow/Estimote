@@ -44,11 +44,22 @@ describe('Beacons', function() {
 
     beforeEach(inject(function($beaconSniffer) {
       beaconFactory = $beaconSniffer;
+      estimote = {
+        beacons: {
+          requestAlwaysAuthorization: function() {},
+          startRangingBeaconsInRegion: function() {}
+        }
+      };
     }));
 
     it('responds to sniff', function() {
       expect(beaconFactory.sniff).toBeDefined();
     });
+
+    it('starts sniffing when sniff is run', function() {
+      beaconFactory.sniff();
+      expect(onDeviceReady).toHaveBeenCalled();
+    })
 
   });
 

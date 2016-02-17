@@ -14,11 +14,6 @@
     var beacons = [];
     var updateTimer;
 
-    function onDeviceReady() {
-      startScan();
-      updateTimer = setInterval(checkHotelBeacon, 1000);
-    }
-
     function startScan() {
 
       estimote.beacons.requestAlwaysAuthorization();
@@ -41,7 +36,7 @@
           stopSniffing();
           changePathToMessages();
         } else if (isNearHotel(beacon)) {
-          updatePageWithNear()
+          updatePageWithNear();
         }
       }
     }
@@ -79,7 +74,8 @@
 
     return {
       sniff: function() {
-        onDeviceReady();
+        startScan();
+        updateTimer = setInterval(checkHotelBeacon, 1000);
       }
     };
 
