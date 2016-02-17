@@ -20,7 +20,11 @@ module.exports = function(config) {
       'lib/angular-resource/angular-resource.js',
       'lib/angular-mocks/angular-mocks.js',
       'js/beacons.js',
-      'tests/beacons.spec.js'
+      'js/home.js',
+      'js/login.js',
+      'tests/beacons.spec.js',
+      'tests/home.spec.js',
+      'tests/login.spec.js'
     ],
 
 

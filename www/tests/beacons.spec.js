@@ -226,10 +226,10 @@ describe('Beacons', function() {
     var location, route, rootScope;
 
     beforeEach(inject(
-      function(_$location_, _$route_, _$rootScope_) {
-        location = _$location_;
-        route = _$route_;
-        rootScope = _$rootScope_;
+      function($location, $route, $rootScope) {
+        location = $location;
+        route = $route;
+        rootScope = $rootScope;
         resolve = {};
       }));
 
