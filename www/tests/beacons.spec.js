@@ -1,6 +1,6 @@
-describe('beacons', function() {
+describe('Beacons', function() {
 
-  describe('BeaconCtrl', function() {
+  describe('The Controller: BeaconCtrl', function() {
 
     beforeEach(function() {
       angular.module('firebase.utils', []);
@@ -25,14 +25,29 @@ describe('beacons', function() {
       ctrl = $controller('BeaconCtrl');
     }));
 
-
-    it('can do some simple maths', function() {
-      expect(1+1).toEqual(2);
+    it('calls the beaconSniffer', function() {
+      expect(ctrl.startSniff).toBe(true);
     });
 
-    it('calls the beaconSniffer', function() {
-      spyOn($beaconSniffer, 'sniff');
-      expect($beaconSniffer.sniff).toHaveBeenCalled();
+  });
+
+  describe('The Factory: $beaconSniffer', function() {
+
+    beforeEach(function() {
+      angular.module('firebase.utils', []);
+      angular.module('firebase', []);
+      angular.module('firebase.auth', []);
+      module('beacons');
+    });
+
+    var beaconFactory;
+
+    beforeEach(inject(function($beaconSniffer) {
+      beaconFactory = $beaconSniffer;
+    }));
+
+    it('responds to sniff', function() {
+      expect(beaconFactory.sniff).toBeDefined();
     });
 
   });
