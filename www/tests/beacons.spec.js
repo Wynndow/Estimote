@@ -43,25 +43,49 @@ describe('Beacons', function() {
     var beaconFactory;
 
     beforeEach(inject(function($beaconSniffer) {
-      beaconFactory = $beaconSniffer;
+      beaconService = $beaconSniffer;
       estimote = {
         beacons: {
           requestAlwaysAuthorization: function() {},
           startRangingBeaconsInRegion: function() {}
         }
       };
-      startScan = function() {};
     }));
 
-    it('responds to sniff', function() {
-      expect(beaconFactory.sniff).toBeDefined();
+    describe('#sniff', function() {
+      it('responds to sniff', function() {
+        expect(beaconService.sniff).toBeDefined();
+      });
+
+      it('can start the scan of beacons', function() {
+        spyOn(beaconService, 'startScan');
+        beaconService.sniff();
+        expect(beaconService.startScan).toHaveBeenCalled();
+      });
+
+      it('calls to checkHotelBeacon', function() {
+        beaconService.updateTimer = 0;
+        beaconService.sniff();
+        expect(beaconService.updateTimer).toEqual(2);
+      });
     });
 
-    it('initializes with an empty array of beacins', function() {
-      var func = beaconFactory.sniff;
-      console.log(func.beacons)
-      expect(func.beacons.length).toBe(0);
+
+    describe('#startScan', function() {
+      it('requests authorization to use location services on iOS', function() {
+        spyOn(estimote.beacons, 'requestAlwaysAuthorization');
+        beaconService.startScan();
+        expect(estimote.beacons.requestAlwaysAuthorization).toHaveBeenCalled();
+      });
+
+      it('starts ranging', function() {
+        spyOn(estimote.beacons, 'startRangingBeaconsInRegion');
+        beaconService.startScan();
+        expect(estimote.beacons.startRangingBeaconsInRegion).toHaveBeenCalled();
+      });
     });
+
+
 
   });
 

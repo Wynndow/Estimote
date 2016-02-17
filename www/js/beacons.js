@@ -20,17 +20,16 @@
     };
 
     self.startScan = function() {
-      console.log('HERE!');
       estimote.beacons.requestAlwaysAuthorization();
-      estimote.beacons.startRangingBeaconsInRegion({}, onBeaconsRanged, onError);
+      estimote.beacons.startRangingBeaconsInRegion({}, self.onBeaconsRanged, self.onError);
+    };
 
-      function onBeaconsRanged(beaconInfo) {
-        self.beacons = beaconInfo.beacons;
-      }
+    self.onBeaconsRanged = function(beaconInfo) {
+      self.beacons = beaconInfo.beacons;
+    };
 
-      function onError(errorMessage) {
-        console.log('Ranging beacons did fail: ' + errorMessage);
-      }
+    self.onError = function(errorMessage) {
+      console.log('Ranging beacons did fail: ' + errorMessage);
     };
 
     self.checkHotelBeacon = function() {
