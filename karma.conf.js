@@ -19,9 +19,8 @@ module.exports = function(config) {
       'lib/angular-route/angular-route.js',
       'lib/angular-resource/angular-resource.js',
       'lib/angular-mocks/angular-mocks.js',
-      'beacons/angular-mocks/angular-mocks.js',
-      '**/*.js',
-      '**/*.spec.js'
+      'js/beacons.js',
+      'tests/beacons.spec.js'
     ],
 
 
@@ -39,7 +38,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'spec'],
 
 
     // web server port

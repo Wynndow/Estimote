@@ -1,11 +1,12 @@
 (function(angular) {
   "use strict";
 
-  var app = angular.module('beacons', ['firebase.auth', 'firebase', 'firebase.utils', 'ngRoute']);
+  var app = angular.module('beacons', ['firebase.utils', 'firebase', 'firebase.auth', 'ngRoute']);
 
   app.controller('BeaconCtrl', ['$beaconSniffer', function($beaconSniffer) {
     $beaconSniffer.sniff();
   }]);
+
 
   app.factory('$beaconSniffer', function($location, $rootScope) {
 
