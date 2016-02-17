@@ -31,7 +31,7 @@ describe('Beacons', function() {
 
   });
 
-  describe('The Factory: $beaconSniffer', function() {
+  describe('The Service: $beaconSniffer', function() {
 
     beforeEach(function() {
       angular.module('firebase.utils', []);
@@ -93,10 +93,10 @@ describe('Beacons', function() {
     describe('#onBeaconsRanged', function() {
       it('sets beacons array to data from onBeaconsRanged', function() {
         var beaconInfo = {
-          beacons: [1,2,3]
+          beacons: [1, 2, 3]
         };
         beaconService.onBeaconsRanged(beaconInfo);
-        expect(beaconService.beacons).toEqual([1,2,3]);
+        expect(beaconService.beacons).toEqual([1, 2, 3]);
       });
     });
 
@@ -203,8 +203,49 @@ describe('Beacons', function() {
     //   });
     // });
 
+  });
 
+  describe('The Config: Routes', function() {
+    beforeEach(function() {
+      angular.module('firebase.utils', []);
+      angular.module('firebase', []);
+      angular.module('firebase.auth', []);
+      module('beacons');
 
+      module(function($provide) {
+        $provide.service('Auth', function() {
+          return {
+            $waitForAuth: function() {
+              return true;
+            }
+          };
+        });
+      });
+    });
+
+    var location, route, rootScope;
+
+    beforeEach(inject(
+      function(_$location_, _$route_, _$rootScope_) {
+        location = _$location_;
+        route = _$route_;
+        rootScope = _$rootScope_;
+        resolve = {};
+      }));
+
+    describe('Login route', function() {
+      beforeEach(inject(
+        function($httpBackend) {
+          $httpBackend.expectGET('beacons/beacons.html')
+            .respond(200);
+        }));
+
+      it('should load the beacons page on successful load of /beacons', function() {
+        location.path('/beacons');
+        rootScope.$digest();
+        expect(route.current.controller).toBe('BeaconCtrl');
+      });
+    });
   });
 
 });
