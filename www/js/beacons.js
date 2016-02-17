@@ -4,7 +4,8 @@
   var app = angular.module('beacons', ['firebase.utils', 'firebase', 'firebase.auth', 'ngRoute']);
 
   app.controller('BeaconCtrl', ['$beaconSniffer', function($beaconSniffer) {
-    $beaconSniffer.sniff();
+    self = this;
+    this.startSniff = $beaconSniffer.sniff();
   }]);
 
 
