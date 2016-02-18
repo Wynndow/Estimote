@@ -22,9 +22,12 @@ module.exports = function(config) {
       'js/beacons.js',
       'js/home.js',
       'js/login.js',
+      'js/app.js',
       'tests/beacons.spec.js',
       'tests/home.spec.js',
-      'tests/login.spec.js'
+      'tests/login.spec.js',
+      'tests/app.spec.js'
+
     ],
 
 
