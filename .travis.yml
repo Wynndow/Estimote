@@ -5,6 +5,7 @@ node_js:
   - "5.5.0"
 before_script:
   - npm -g install npm@latest
+  - npm install -g bower
   - npm install
   - bower install
   - "export DISPLAY=:99.0"
