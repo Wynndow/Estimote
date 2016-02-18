@@ -3,15 +3,17 @@
 
   var app = angular.module('messages', ['ngRoute', 'ngCordova', 'firebase.auth', 'firebase', 'firebase.utils']);
 
-  app.controller('messageCtrl', ['messagesFactory', function(messagesFactory) {
+  app.controller('messageCtrl', ['messagesService', function(messagesService) {
     self = this;
-    var callback = messagesFactory.notifyUser;
-    messagesFactory.getMessage(callback);
+    var callback = messagesService.notifyUser;
+    messagesService.getMessage(callback);
   }]);
 
-  app.factory('messagesFactory', function($cordovaLocalNotification, $ionicPlatform) {
-    return {
-      getMessage: function(callback) {
+  app.service('messagesService', ['$cordovaLocalNotification', '$ionicPlatform', function($cordovaLocalNotification, $ionicPlatform) {
+
+      var serviceSelf = this;
+
+      serviceSelf.getMessage = function(callback) {
         var db = new Firebase('https://hotel-check-in.firebaseio.com/');
         var uid = db.getAuth().uid;
         var ref = new Firebase('https://hotel-check-in.firebaseio.com/users/' + uid + '/arrivalMessage');
@@ -21,8 +23,9 @@
         }, function(errorObject) {
           callback('Please go to reception');
         });
-      },
-      notifyUser: function(message) {
+      };
+
+      serviceSelf.notifyUser = function(message) {
         $ionicPlatform.ready(function() {
           $cordovaLocalNotification.schedule({
             id: 1,
@@ -33,9 +36,9 @@
             }
           });
         });
-      }
-    };
-  });
+      };
+
+  }]);
 
   app.config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/messages', {
