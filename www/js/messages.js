@@ -5,8 +5,8 @@
 
   app.controller('messageCtrl', ['messagesService', function(messagesService) {
     self = this;
-    var callback = messagesService.notifyUser;
-    messagesService.getMessage(callback);
+    self.callback = messagesService.notifyUser;
+    self.runFunctions = messagesService.getMessage(self.callback);
   }]);
 
   app.service('messagesService', ['$cordovaLocalNotification', '$ionicPlatform', function($cordovaLocalNotification, $ionicPlatform) {
@@ -29,7 +29,7 @@
         $ionicPlatform.ready(function() {
           $cordovaLocalNotification.schedule({
             id: 1,
-            title: 'Warning',
+            title: 'Welcome to the Makers Motel!',
             text: message,
             data: {
               customProperty: 'custom value'
