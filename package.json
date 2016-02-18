@@ -10,7 +10,7 @@
     "gulp-rename": "^1.2.0"
   },
   "scripts": {
-    "karma-tests": "karma start karma.conf.js  --single-run",
+    "karma-tests": "karma start karma.conf.js  --single-run"
   },
   "devDependencies": {
     "bower": "^1.3.3",
