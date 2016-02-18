@@ -38,6 +38,7 @@
         if (self.isInHotel(beacon)) {
           self.sendDataToFirebaseUser();
           self.sendDataToFirebaseHotel();
+          self.getImageFromFirebase(self.sendImageToFirebase);
           self.stopSniffing();
           self.changePathToMessages();
         } else if (self.isNearHotel(beacon)) {
@@ -64,9 +65,30 @@
     };
 
     self.sendDataToFirebaseHotel = function() {
+      var db = new Firebase('https://hotel-check-in.firebaseio.com/');
+      var uid = db.getAuth().uid;
       var ref = new Firebase('https://hotel-check-in.firebaseio.com/users/9c22d12a-006c-4847-865f-78dee2ca69a7/bookings/0/');
       ref.update({
-        checked_in: true
+        checked_in: true,
+        guestUid: uid
+      });
+    };
+
+    self.getImageFromFirebase = function(callback) {
+      var db = new Firebase('https://hotel-check-in.firebaseio.com/');
+      var uid = db.getAuth().uid;
+      var ref = new Firebase('https://hotel-check-in.firebaseio.com/users/' + uid + '/image');
+      ref.on('value', function(snapshot) {
+        callback(snapshot.val());
+      }, function(errorObject) {
+        callback('Please go to reception');
+      });
+    };
+
+    self.sendImageToFirebase = function(image) {
+      var ref = new Firebase('https://hotel-check-in.firebaseio.com/users/9c22d12a-006c-4847-865f-78dee2ca69a7/bookings/0/');
+      ref.update({
+        photos: image
       });
     };
 
