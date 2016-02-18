@@ -116,6 +116,8 @@ describe('Beacons', function() {
         };
         beaconService.beacons = [beacon];
         spyOn(beaconService, 'sendDataToFirebaseUser');
+        beaconService.sendDataToFirebaseHotel = function() {};
+        beaconService.getImageFromFirebase = function() {};
         beaconService.checkHotelBeacon();
         expect(beaconService.sendDataToFirebaseUser).toHaveBeenCalled();
       });
@@ -128,6 +130,8 @@ describe('Beacons', function() {
         beaconService.beacons = [beacon];
         spyOn(beaconService, 'stopSniffing');
         beaconService.sendDataToFirebaseUser = function() {};
+        beaconService.sendDataToFirebaseHotel = function() {};
+        beaconService.getImageFromFirebase = function() {};
         beaconService.checkHotelBeacon();
         expect(beaconService.stopSniffing).toHaveBeenCalled();
       });
@@ -140,6 +144,8 @@ describe('Beacons', function() {
         beaconService.beacons = [beacon];
         spyOn(beaconService, 'changePathToMessages');
         beaconService.sendDataToFirebaseUser = function() {};
+        beaconService.sendDataToFirebaseHotel = function() {};
+        beaconService.getImageFromFirebase = function() {};
         beaconService.checkHotelBeacon();
         expect(beaconService.changePathToMessages).toHaveBeenCalled();
       });
