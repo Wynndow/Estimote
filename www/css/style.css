@@ -1,1 +1,16 @@
-/* Empty. Add your own CSS if you like */
+body {
+  text-align: center;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+#homePageText {
+  background-color: #eee;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+#theTitle {
+  font-size: 3em;
+  margin-top: 5px;
+}
