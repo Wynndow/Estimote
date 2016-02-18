@@ -41,7 +41,7 @@
           self.changePathToMessages();
         } else if (self.isNearHotel(beacon)) {
           self.updatePageWithNear();
-        }
+        } 
       }
     };
 

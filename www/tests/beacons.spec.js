@@ -108,6 +108,54 @@ describe('Beacons', function() {
       });
     });
 
+    describe('#checkHotelBeacon', function() {
+      it('sends data to firebase if beacon in range', function() {
+        var beacon = {
+          proximityUUID: "51ea51f9-2455-49fe-b751-09c609c70633",
+          distance: 0.1
+        };
+        beaconService.beacons = [beacon];
+        spyOn(beaconService, 'sendDataToFirebase');
+        beaconService.checkHotelBeacon();
+        expect(beaconService.sendDataToFirebase).toHaveBeenCalled();
+      });
+
+      it('stops sniffing the beacons if beacon in range', function() {
+        var beacon = {
+          proximityUUID: "51ea51f9-2455-49fe-b751-09c609c70633",
+          distance: 0.1
+        };
+        beaconService.beacons = [beacon];
+        spyOn(beaconService, 'stopSniffing');
+        beaconService.sendDataToFirebase = function() {};
+        beaconService.checkHotelBeacon();
+        expect(beaconService.stopSniffing).toHaveBeenCalled();
+      });
+
+      it('changes the path to messages if beacon in range', function() {
+        var beacon = {
+          proximityUUID: "51ea51f9-2455-49fe-b751-09c609c70633",
+          distance: 0.1
+        };
+        beaconService.beacons = [beacon];
+        spyOn(beaconService, 'changePathToMessages');
+        beaconService.sendDataToFirebase = function() {};
+        beaconService.checkHotelBeacon();
+        expect(beaconService.changePathToMessages).toHaveBeenCalled();
+      });
+
+      it('updates page if beacon detected but out of range', function() {
+        var beacon = {
+          proximityUUID: "51ea51f9-2455-49fe-b751-09c609c70633",
+          distance: 100
+        };
+        beaconService.beacons = [beacon];
+        spyOn(beaconService, 'updatePageWithNear');
+        beaconService.checkHotelBeacon();
+        expect(beaconService.updatePageWithNear).toHaveBeenCalled();
+      });
+    });
+
     describe('#isInHotel', function() {
       it('returns true if the beacon is within range', function() {
         var beacon = {
