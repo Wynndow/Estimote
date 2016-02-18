@@ -29,9 +29,6 @@ describe('Messages', function() {
       expect(ctrl.callback).toEqual('The Notification Function');
     });
 
-    // it('calls the getMessage function with the callback', function() {
-    //   expect(ctrl.runFunctions).toEqual(Function);
-    // })
   });
 
   describe('The Service: ', function() {
@@ -39,36 +36,34 @@ describe('Messages', function() {
     beforeEach(function() {
       angular.module('ngCordova', []);
       angular.module('firebase.auth', []);
-      // angular.module('firebase', []);
+      angular.module('firebase', []);
       angular.module('firebase.utils', []);
-      module('messages')
+      module('messages');
 
       module(function($provide) {
         $provide.service('$cordovaLocalNotification', function() {
         });
         $provide.service('$ionicPlatform', function() {
+          return {
+            ready: function() {}
+          }
         });
       })
     })
 
-    var messServ;
-    function Firebase() {};
+    var messServ, ionicPlatform;
 
-    beforeEach(inject(function(messagesService) {
-      messServ = messagesService
-      console.log(messServ)
+    beforeEach(inject(function(messagesService, $ionicPlatform) {
+      messServ = messagesService;
+      ionicPlatform = $ionicPlatform;
     }));
 
-    describe('#getMessage', function() {
-      it('sets db to a firebase object', function() {
-        messServ.getMessage();
+    describe('#notifyUser', function() {
+      it('calls the $ionicPlatform.ready function', function() {
+        spyOn(ionicPlatform, 'ready');
+        messServ.notifyUser();
+        expect(ionicPlatform.ready).toHaveBeenCalled();
       });
-      //
-      // // it('calls the function #on on the Firebase instance', function() {
-      // //   spyOn(window.ref, 'on');
-      // //   messServ.getMessage(1);
-      // //   expect(window.ref.on).toHaveBeenCalled();
-      // });
     });
 
   })
