@@ -3,7 +3,10 @@
 
   var app = angular.module('home', ['firebase.auth', 'ngRoute']);
 
-  app.controller('HomeCtrl', function() {});
+  app.controller('HomeCtrl', ['$scope', function($scope) {
+    self = $scope;
+    self.loggedIn = false;
+  }]);
 
   app.config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/home', {
