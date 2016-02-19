@@ -115,9 +115,11 @@ describe('Beacons', function() {
           distance: 0.1
         };
         beaconService.beacons = [beacon];
-        spyOn(beaconService, 'sendDataToFirebase');
+        spyOn(beaconService, 'sendDataToFirebaseUser');
+        beaconService.sendDataToFirebaseHotel = function() {};
+        beaconService.getImageFromFirebase = function() {};
         beaconService.checkHotelBeacon();
-        expect(beaconService.sendDataToFirebase).toHaveBeenCalled();
+        expect(beaconService.sendDataToFirebaseUser).toHaveBeenCalled();
       });
 
       it('stops sniffing the beacons if beacon in range', function() {
@@ -127,7 +129,9 @@ describe('Beacons', function() {
         };
         beaconService.beacons = [beacon];
         spyOn(beaconService, 'stopSniffing');
-        beaconService.sendDataToFirebase = function() {};
+        beaconService.sendDataToFirebaseUser = function() {};
+        beaconService.sendDataToFirebaseHotel = function() {};
+        beaconService.getImageFromFirebase = function() {};
         beaconService.checkHotelBeacon();
         expect(beaconService.stopSniffing).toHaveBeenCalled();
       });
@@ -139,7 +143,9 @@ describe('Beacons', function() {
         };
         beaconService.beacons = [beacon];
         spyOn(beaconService, 'changePathToMessages');
-        beaconService.sendDataToFirebase = function() {};
+        beaconService.sendDataToFirebaseUser = function() {};
+        beaconService.sendDataToFirebaseHotel = function() {};
+        beaconService.getImageFromFirebase = function() {};
         beaconService.checkHotelBeacon();
         expect(beaconService.changePathToMessages).toHaveBeenCalled();
       });
