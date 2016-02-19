@@ -69,7 +69,7 @@
       var uid = db.getAuth().uid;
       var ref = new Firebase('https://hotel-check-in.firebaseio.com/users/9c22d12a-006c-4847-865f-78dee2ca69a7/bookings/0/');
       ref.update({
-        checked_in: true,
+        checked_in: 'YES',
         guestUid: uid
       });
     };
