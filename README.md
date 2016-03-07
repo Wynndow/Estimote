@@ -6,7 +6,7 @@
 
 This is the partner app to augment the main [Hotelligence](https://github.com/Wynndow/hotel_check_in) app. It's created using Firebase as the backend with Angular on the front. It utilises the Ionic framework to bring the app to mobile, with extra plugins to enable functionality with Estimote bluetooth beacons and to allow local notifications. Testing is via Karma
 
-## Installation
+#### Installation
 
 0. Clone this repo using ```$ git clone git@github.com:Wynndow/Estimote.git```
 0. Move into the new directory using `$ cd Estimote`
@@ -16,7 +16,7 @@ This is the partner app to augment the main [Hotelligence](https://github.com/Wy
 0. If not already installed, install Ionic with `$ sudo npm install -g ionic`
 0. Withing the `beacons.js` file update the UUID to match your beacon.
 
-## Usage
+#### Usage
 
 As the app is not currently released for iOS or Android, it needs to be run locally.
 
@@ -25,7 +25,7 @@ As the app is not currently released for iOS or Android, it needs to be run loca
 0. Sign in with the same credentials as used for the main Hotelligence app.
 0. When the mobile phone is within range of the specified beacon, the app will update the database and retrieve any messages specified in the main app.
 
-## Testing
+#### Testing
 
 0. Ensure Karma is installed.
 0. Karma unit tests can be run via Grunt with `$ grunt unit`
